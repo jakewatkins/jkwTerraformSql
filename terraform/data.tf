@@ -11,3 +11,8 @@ data "azurerm_key_vault_secret" "SQL_Password" {
     name = "pubsPassword"
     key_vault_id = data.azurerm_key_vault.support_key_vault.id
 }
+
+data "azurerm_key_vault_secret" "SQL_Admin" {
+    name = "pubsAdmin"
+    key_vault_id = data.azurerm_key_vault.support_key_vault.id
+}

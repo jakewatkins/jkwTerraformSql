@@ -15,8 +15,8 @@ resource "azurerm_mssql_database" "database" {
     sku_name       = var.sql_sku[terraform.workspace]
 }
 
-# resource "azurerm_key_vault_secret" "DB_ConnectionString" {
-#     name = format(var.db_ConnectionString_name[terraform.workspace], var.Workload, var.Release)
-#     value = "Server=tcp:${azurerm_mssql_server.SQL_Server.fully_qualified_domain_name};Database=${azurerm_mssql_database.database.name};User ID=${var.sqlAdmin};Password=${var.sqlPassword};Trusted_Connection=False;Encrypt=True;"
-#     key_vault_id = data.azurerm_key_vault.support_key_vault.id
-# }
+resource "azurerm_key_vault_secret" "DB_ConnectionString" {
+    name = var.db_ConnectionString_name
+    value = "Server=tcp:${azurerm_mssql_server.SQL_Server.fully_qualified_domain_name};Database=${azurerm_mssql_database.database.name};User ID=${data.azurerm_key_vault_secret.SQL_Admin.value};Password=${data.azurerm_key_vault_secret.SQL_Admin.value};Trusted_Connection=False;Encrypt=True;"
+    key_vault_id = data.azurerm_key_vault.support_key_vault.id
+}

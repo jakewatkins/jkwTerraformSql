@@ -8,7 +8,7 @@ resource "azurerm_mssql_server" "SQL_Server" {
     resource_group_name = azurerm_resource_group.resource_group.name
     version = "12.0"
     minimum_tls_version = "1.2"
-    administrator_login = var.sqlAdmin
+    administrator_login = data.azurerm_key_vault_secret.SQL_Admin.value
     administrator_login_password = data.azurerm_key_vault_secret.SQL_Password.value
 }
 
